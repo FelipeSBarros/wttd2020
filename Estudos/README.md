@@ -1,17 +1,18 @@
 ## Check list de boas práticas e deploy Heroku
 
 1. [Separar Elementos da instacia X projetos](#Separar-Elementos-da-instacia-X-projetos)  
-    * `SECRET_KEY` deve ir ao arquivo `.env`
+    Variáveis de instancia a serem configuradas:  
+    * `SECRET_KEY`  
     * `DEBUG`  
-    * `DATABASESE`  
+    * `DATABASESE`
+        * Usar módulo `dj-database-url`  
     * `ALLOWED_HOSTS`  
-    
 1. [Separar staticfiles]()  
-    * dj-static
-    * adicionar `STATIC_ROOT`  
-    * configurar [wsgi.py]()
+    * Usar módulo `dj-static`
+    * adicionar `STATIC_ROOT` em settings.py  
+    * configurar wsgi.py  
 1. [Registrar dependencias do projeto](#Registrando-dependencias-do-projeto)
-    * Criar requirementes.txt()
+    * Criar requirementes.txt
 1. [Criar arquivo de inicialização heroku](#arquivo-de-inicialização-heroku)
 1. Criar repositório GIT  
     * Criar repositório (`git init`)  
@@ -23,7 +24,6 @@
         * *pyc
         * \_\_pycache__  
     * Adicionar arquivos para versionamento e commit
-    *
 1. [Criar conta](https://www.heroku.com/)  
 1. [Heroku toolbelt](#Heroku-toolbelt)  
 1. [Criar heroku app](#Heroku-app)  
@@ -65,13 +65,19 @@ DATABASES = {
     'default': config('DATABASE_URL', default=default_dburl, cast=dburl),
 }
 
+...
+
 ALLOWED_HOSTS = [*]
+
+...
 
 STATIC_ROOT = os.path.join(BASE_DIS, 'staticfiles')
 ```
 
 **.env**  
-Não manter os espaços!
+
+:warning: Garantir que não há espaços vazios;  
+
 ```
 SECRET_KEY=!a3rçkds...sdsd?
 DEBUG=True
@@ -92,7 +98,9 @@ application = Cling(get_wsgi_application())
 ```
 pip freeze > requirements.txt
 ```  
-Depois, adicionar alguns módilos de forma manual:
+
+Depois, adicionar alguns módulos manualmente no `requirements.txt`:
+
 ```
 gunicord==19.8.1
 psycopg2-binary==2.8.6
@@ -109,11 +117,12 @@ web: gunicorn nome_proj_django.wsgi --log-file -
 ```
 
 ## [Heroku toolbelt](https://devcenter.heroku.com/articles/heroku-cli)  
-Instalando as ferramentas necessarias par ao deploy:
+Instalando as ferramentas necessarias para o deploy (instalação automática):
 * Heroku;  
 * git;  
 * ssh;  
 
+Comando:
 ```
 sudo snap install --classic heroku
 ```
@@ -130,8 +139,11 @@ Confirmando configuração
 ```
 heroku login -i
 ```
+
 ## Heroku app  
+
 A app é criada e já é adicionado um remote git para deploy
+
 ```
 heroku apps:create nome_app
 # verificar
