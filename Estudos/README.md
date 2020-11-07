@@ -10,9 +10,9 @@
     * dj-static
     * adicionar `STATIC_ROOT`  
     * configurar [wsgi.py]()
-1. Registrar dependencias do projeto
-    * Criar [requirementes.txt]()
-1. Criar [arquivo de inicialização heroku]()
+1. [Registrar dependencias do projeto](#Registrando-dependencias-do-projeto)
+    * Criar requirementes.txt()
+1. [Criar arquivo de inicialização heroku](#arquivo-de-inicialização-heroku)
 1. Criar repositório GIT  
     * Criar repositório (`git init`)  
     * Criar `.gitignore`  
@@ -27,11 +27,18 @@
 1. [Criar conta](https://www.heroku.com/)  
 1. [Heroku toolbelt](#Heroku-toolbelt)  
 1. [Criar heroku app](#Heroku-app)  
-1. [Configurar variáveis de ambiente Heroku]()  
-1. [Fazendo o push do projeto ao Heroku]()  
+1. [Configurar variáveis de ambiente Heroku](#Configurar-variáveis-de-ambiente-Heroku)  
+1. [Fazendo o push do projeto ao Heroku](#Fazendo-o-push-do-projeto-ao-Heroku)  
 
 ## Separar Elementos da instacia X projetos  
 Python-decouple permite ter um código único para várias instancias ao permitir a separação do codigo-fonte dos elemntos de configuração das diferentes instancias.  
+
+**Resumo da etapa**:    
+Sempre que o projeto for inicializado e a função config for usada pasando a chave `SECRET_KEY`, o decouple busca uma variável do ambiente com esse nome. ao não encontrar, irá carregá-la do arquivo `.env`;  
+No caso do `DEBUG`, é o mesmo. So adicionamos um valor padrão para o caso de não haver essa variavel de ambiente e o cast para que a strin vazia seja identificada como booleana;  
+Sobre base de dados, vamos fazer com que o Django busque a variável de ambiente `DATABASE_URL` que, caso não exista, será buscada no `.env`. E caso não seja encontrado no `.env`, será usado o `default_dburl` (que possui a url para o db de desenvolvimento) que será passada ao `dburl` do modulo dj-database_url. 
+`ALLOWED_HOSTS` atenderá a todos os chamados ([*]).  
+`Cling` é uma app wsgi já do padrão python, assim como o `get_wsgi_aaplication()`. Ao envonver-los, o servidor web passará pelo `Cling` que depois o passará ao `get_wsgi_apppllication()` servindo, dessa forma os arquivos estáticos antes de chegar a requisição do Django.  
 
 ### Instalando Python-decouple  
 
@@ -78,16 +85,9 @@ from dj-static import Cling
 ...
 
 application = Cling(get_wsgi_application())
-```
+```  
 
-**Resumo do processamento**:    
-Sempre que o projeto for inicializado e a função config for usada pasando a chave `SECRET_KEY`, o decouple busca uma variável do ambiente com esse nome. ao não encontrar, irá carregá-la do arquivo `.env`;  
-No caso do `DEBUG`, é o mesmo. So adicionamos um valor padrão para o caso de não haver essa variavel de ambiente e o cast para que a strin vazia seja identificada como booleana;  
-Sobre base de dados, vamos fazer com que o Django busque a variável de ambiente `DATABASE_URL` que, caso não exista, será buscada no `.env`. E caso não seja encontrado no `.env`, será usado o `default_dburl` (que possui a url para o db de desenvolvimento) que será passada ao `dburl` do modulo dj-database_url. 
-`ALLOWED_HOSTS` atenderá a todos os chamados ([*]).  
-`Cling` é uma app wsgi já do padrão python, assim como o `get_wsgi_aaplication()`. Ao envonver-los, o servidor web passará pelo `Cling` que depois o passará ao `get_wsgi_apppllication()` servindo, dessa forma os arquivos estáticos antes de chegar a requisição do Django.  
-
-## Registrando dependencias d projeto:  
+## Registrando dependencias do projeto:  
 
 ```
 pip freeze > requirements.txt
@@ -98,7 +98,7 @@ gunicord==19.8.1
 psycopg2-binary==2.8.6
 ```  
 
-## Criar [arquivo de inicialização heroku]  
+## Criar arquivo de inicialização heroku  
 
 Criar `Procfile` no diretorio de trabalho.
 
