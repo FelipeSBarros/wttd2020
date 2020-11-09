@@ -102,7 +102,7 @@ pip freeze > requirements.txt
 Depois, adicionar alguns módulos manualmente no `requirements.txt`:
 
 ```
-gunicord==19.8.1
+gunicorn==19.8.1
 psycopg2-binary==2.8.6
 ```  
 
