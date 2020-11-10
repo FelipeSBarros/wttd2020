@@ -29,6 +29,7 @@
 1. [Criar heroku app](#Heroku-app)  
 1. [Configurar variáveis de ambiente Heroku](#Configurar-variáveis-de-ambiente-Heroku)  
 1. [Fazendo o push do projeto ao Heroku](#Fazendo-o-push-do-projeto-ao-Heroku)  
+1. [Atualizando o django](#Atualizando-o-Django)  
 
 ## Separar Elementos da instacia X projetos  
 Python-decouple permite ter um código único para várias instancias ao permitir a separação do codigo-fonte dos elemntos de configuração das diferentes instancias.  
@@ -167,3 +168,32 @@ heroku config:set DEBUG=True
 ```
 git push heroku master -- force
 ```
+
+## Atualizando o Django  
+
+>não ter medo de atualizado o django.  
+
+Ler as *release notes* para saber o que foi alterado e tentar antever alguns possíveis problemas.
+
+Para atualizar:
+```
+pip install --upgrade django
+```
+
+:warning: não esquecer de atualizar o `requirements.txt`.  
+
+O Django disponibiliza uma ferramenta para testar se tudo está funcionando como deveria:
+```
+manage check
+```
+
+Basta ir olhando o *trace back* para identificar o erro. Se necessário, buscar no google como solucioná-lo.
+Ao final, teremos todas as **checagens padrão** do django funcionando. Mas pode ser que o projeto ainda apresente problemas.
+
+```
+manage runserver
+```
+
+Para identificar os problemas finais e buscar solucioná-los.
+
+Por ultimo, rodar os testes do projeto... :warning: TATFT :warning:  
