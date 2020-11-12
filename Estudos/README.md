@@ -1,5 +1,6 @@
 ## Check list de boas práticas e deploy Heroku
 
+1. [Instalando Python](#Instalando-Python)
 1. [Separar Elementos da instacia X projetos](#Separar-Elementos-da-instacia-X-projetos)  
     Variáveis de instancia a serem configuradas:  
     * `SECRET_KEY`  
@@ -30,6 +31,52 @@
 1. [Configurar variáveis de ambiente Heroku](#Configurar-variáveis-de-ambiente-Heroku)  
 1. [Fazendo o push do projeto ao Heroku](#Fazendo-o-push-do-projeto-ao-Heroku)  
 1. [Atualizando o django](#Atualizando-o-Django)  
+
+## Instalando Python  
+
+**Resumo**:  
+Para não nos perdermos com as diferentes versões do python e para poder trabalhar com diferentes projetos com diferentes versões, vamos usar o [Pyenv](https://github.com/pyenv/pyenv).  
+Antes, [vamos instalar alguma bibliotecas necessárias](https://github.com/pyenv/pyenv/wiki/Common-build-problems):
+
+```
+sudo apt-get install -y build-essential libssl-dev zlib1g-dev libbz2-dev \
+libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev libncursesw5-dev \
+xz-utils tk-dev libffi-dev liblzma-dev python-openssl git
+```
+Para, enfim proceder a instalação do pyenv:
+
+```
+curl -L https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-installer | bash
+```
+
+Após a instalação, vamos adicionar a três ultimas linhas apresentadas no console, no nosso `bashrc`:
+```
+gedit ~/.bashrc
+...
+
+# add pyenv
+export PATH="/home/felipe/.pyenv/bin:$PATH"
+eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
+```
+Agora temos o python rodando direto usando o pyenv. Podemos testar rodando `pyenv` direto no terminal.
+Mas por agora só temos o python do sistema instalado. Devemos, então instalar a versão que queremos:
+```
+pyenv  #testa se está funcionando
+
+pyenv versions # para identificar quais versoes temos intaladas.
+
+pyenv install -l # lista as versoes disponiveis pelo pyenv.
+
+pyenv install 3.5.0 # instalando a versão 3.5.0
+
+# Vamos definir o python 3.5.0 como global:
+pyenv global 3.5.0
+```
+```
+# Alias venv
+alias manage='python $VIRTUAL_ENV/../manage.py'
+```
 
 ## Separar Elementos da instacia X projetos  
 Python-decouple permite ter um código único para várias instancias ao permitir a separação do codigo-fonte dos elementos de configuração das diferentes instancias (`.env`).  
