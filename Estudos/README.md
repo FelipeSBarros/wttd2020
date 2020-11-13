@@ -112,6 +112,7 @@ pip install dj-static
 
 **settings.py**
 ```
+import os
 from decouple import config, Csv
 from dj_database_url import parse as dburl
 
@@ -120,7 +121,7 @@ from dj_database_url import parse as dburl
 SECRET_KEY = config('SECRET_KEY')
 DEBUG = config('DEBUG', default=False, cast=bool)
 
-default_uburl_ = 'sqlite:///' + os.path.join(BASE_DIR, 'd.sqlite3')
+default_dburl_ = 'sqlite:///' + os.path.join(BASE_DIR, '.sqlite3')
 DATABASES = {
     'default': config('DATABASE_URL', default=default_dburl, cast=dburl),
 }
@@ -131,7 +132,14 @@ ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='', cast=Csv()
 
 ...
 
-STATIC_ROOT = os.path.join(BASE_DIS, 'staticfiles')
+default_dburl = 'sqlite:///' + os.path.join(BASE_DIR, '.sqlite3')
+DATABASES = {
+    'default': config('DATABASE_URL', default=default_dburl, cast=dburl),
+}
+
+...
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 ```
 
 **.env**  
