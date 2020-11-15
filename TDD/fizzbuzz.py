@@ -24,6 +24,7 @@ def robot(pos):
 
     return say
 
+""""
 def assert_equal(result, expected):
     from sys import _getframe
     msg = 'Fail: lin {} got {} expecting {}'
@@ -49,3 +50,4 @@ if __name__ == '__main__':
     assert_equal(robot(15), 'fizzbuzz')
     assert_equal(robot(30), 'fizzbuzz')
     assert_equal(robot(45), 'fizzbuzz')
+"""
